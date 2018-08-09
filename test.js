@@ -33,3 +33,12 @@ var q = h.parse(s, ['key', 'author'])
 console.log( JSON.stringify(q, null, 2))
 //if( Object.keys(q).length == 0 ) throw 'should have no result'
 c.report()
+
+var c = new capture()
+var h = new humansearch({})
+var s = '/(foo|bar)/'
+console.log("\nq.parse('"+s+"', ['key', 'author'])")
+var q = h.parse(s, ['key', 'author'])
+console.log( JSON.stringify(q, null, 2))
+//if( Object.keys(q).length == 0 ) throw 'should have no result'
+c.report()

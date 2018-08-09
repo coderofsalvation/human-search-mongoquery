@@ -149,3 +149,26 @@ generate mongo queries based on human natural language (Google / Search engine s
 		}
 	  ]
 	}
+
+> Or, let the user indulge into GEEKPLEASURE by supporting a regex search:
+
+	q.parse('/(foo|bar)/', ['key', 'author'])
+
+#### output
+
+	{
+	  "$or": [
+		{
+		  "key": {
+			"$regex": "(foo|bar)",
+			"$options": "i"
+		  }
+		},
+		{
+		  "author": {
+			"$regex": "(foo|bar)",
+			"$options": "i"
+		  }
+		}
+	  ]
+	}

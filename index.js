@@ -16,18 +16,28 @@ function humansearch(opts){
 		q.push(obj)
 	}
 
+	this.mapRegex = function(str, props){
+		var $or = []
+		props.map( function(p){
+			var obj = {}
+			obj[p] = {"$regex":str.substr(1).substr(0,str.length-2), "$options":"i"}
+			$or.push(obj)
+		})
+		return {"$or":$or}
+	}
+
 	this.escapeRegexStr = function escapeRegExp(string) {
 	  	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 	}
 
-	this.toMongo = function(tokens, properties){
+	this.toMongo = function(tokens, props){
 		var q = {"$and":[]}
 		var $and = q["$and"]
 		var me = this
 		var $or = []
 		tokens.map( function(t){
 			if( !t.match(' ') && t.match(':') ) return me.mapProperty($and, t)
-			properties.map( function(p){
+			props.map( function(p){
 				t = t.replace(/["']/g, '')
 					 .trim()
 				var o = {}
@@ -40,13 +50,12 @@ function humansearch(opts){
 		return q["$and"].length == 0 && Object.keys(q).length == 1 ? {} : q
 	}
 
-	this.parse = function(str, properties){
+	this.parse = function(str, props){
 		if( !str ) return
+		if( str[0] == '/' && str[str.length-1] == '/' ) return this.mapRegex(str, props)
 		var str = str.trim()
-		var p = this.pattern
-		if( str[0] == '/' && str[ str.length-1 ] == '/' ) return this.regex = str 
-		var tokens = str.match( p.a ) || []
-		return this.toMongo(tokens, properties)
+		var tokens = str.match( this.pattern.a ) || []
+		return this.toMongo(tokens, props)
 	}
 
 	return this
