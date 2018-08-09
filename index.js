@@ -12,8 +12,12 @@ function humansearch(opts){
 	this.mapProperty = function(q, t){
 		var parts = t.split(":")
 		var obj   = {}
-		obj[parts[0]] = { "$regex":parts[1], "$options":"i" }
+		obj[parts[0]] = { "$regex": this.escapeRegexStr(parts[1]), "$options":"i" }
 		q.push(obj)
+	}
+
+	this.escapeRegexStr = function escapeRegExp(string) {
+	  	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 	}
 
 	this.toMongo = function(tokens, properties){
@@ -27,8 +31,8 @@ function humansearch(opts){
 				t = t.replace(/["']/g, '')
 					 .trim()
 				var o = {}
-				o[p] = t[0] == '-' ? {"$not":{"$regex":t.substr(1), "$options":"i"}}
-								   : {"$regex":t, "$options":"i"}
+				o[p] = t[0] == '-' ? {"$not":{"$regex": me.escapeRegexStr(t.substr(1)), "$options":"i"}}
+								   : {"$regex": me.escapeRegexStr(t), "$options":"i"}
 				$or.push(o)		
 			})
 		})

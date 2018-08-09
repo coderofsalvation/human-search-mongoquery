@@ -1,6 +1,6 @@
 {
   "name": "human-search-mongoquery",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "https://github.com/coderofsalvation/human-search-mongoquery.git",
   "main": "index.js",
   "scripts": {

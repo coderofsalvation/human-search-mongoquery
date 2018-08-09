@@ -127,7 +127,7 @@ generate mongo queries based on human natural language (Google / Search engine s
 		},
 		{
 		  "site": {
-			"$regex": "github.com",
+			"$regex": "github\\.com",
 			"$options": "i"
 		  }
 		},
