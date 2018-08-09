@@ -1,0 +1,19 @@
+{
+  "name": "human-search-mongoquery",
+  "version": "1.0.0",
+  "description": "https://github.com/coderofsalvation/human-search-mongoquery.git",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coderofsalvation/human-search-mongoquery.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coderofsalvation/human-search-mongoquery/issues"
+  },
+  "homepage": "https://github.com/coderofsalvation/human-search-mongoquery#readme"
+}
