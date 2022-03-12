@@ -2,6 +2,12 @@ var nodejs = (typeof module !== 'undefined' && typeof module.exports !== 'undefi
 // https://github.com/queicherius/refined-text-search/blob/master/src/index.js
 // oboe.js streaming json
 
+function isNumeric(str) {
+    if (typeof str != "string") return false // we only process strings!  
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+             !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+}
+
 function humansearch(opts){
 
 	this.opts = opts
@@ -56,6 +62,20 @@ function humansearch(opts){
 		var str = str.trim()
 		var tokens = str.match( this.pattern.a ) || []
 		return this.toMongo(tokens, props)
+	}
+
+	this.vars = function(str, props){
+		if( !str ) return
+		if( str[0] == '/' && str[str.length-1] == '/' ) return this.mapRegex(str, props)
+		var str = str.trim()
+		var tokens = str.match( this.pattern.a ) || []
+    var vars = {}
+    tokens.map( (token) => {
+      let k = token.replace(/:.*/g, '')
+      let v = token.replace(/.*:/, '') || true
+      vars[k] = isNumeric(v) ? v.match(/\./) ? parseFloat(v) : parseInt(v) : v
+    })
+		return vars
 	}
 
 	return this

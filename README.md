@@ -1,10 +1,24 @@
-generate mongo queries based on human natural language (Google / Search engine style).
+generate mongo or object queries based on human natural language (Google / Search engine style).
 
 ## Usage
 
 	var humansearch = require('human-search-mongoquery') // ignore this line in the browser 
 
 	var q = new humansearch()                            // in the browser use 'new window.humansearch()'
+
+> Now lets just parse some variables
+
+    q.vars('foo:1 bar:flop -foo test:1.23')
+
+#### output
+
+    {
+      "foo": 1, 
+      "bar": "flop", 
+      "-foo": "-foo", 
+      "test": 1.23
+    }
+
 
 > Now lets say, the user types '"foo flop" flap -bar'	
 
